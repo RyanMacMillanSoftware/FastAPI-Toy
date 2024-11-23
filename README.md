@@ -1,5 +1,6 @@
 # FastAPI-Toy
 Trying out Python FastAPI.
+The aim is to build from the ground up with FastAPI, SQLAlchemy, and Pydantic. Intentially avoiding any templates or tools to speed up project setup so I can focus on the basics of spinning up a new API with the necessary tooling.
 
 ## The task
 Build the following APIs.
@@ -31,6 +32,16 @@ Response:
 ```json
 201 Created
 ```
+
+### Next steps
+Once the API is working as intended move on to these improvements:
+- Add limit and offset to the GET API
+- Containerise, use docker and docker compose
+- Move from SQLite to Postgres in docker
+- Enhance the generated docs
+
+### Won't do
+Testing. Quality isn't the purpose of this project. 
 
 ## Project setup
 ### Setup env and install dependencies
