@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
 
@@ -7,14 +8,16 @@ from db.session import get_db
 from db.models import create_db_tables
 from db.DBEngine import DBEngine
 
-# Instantiate API
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Create DB tables from ORM schema
+    create_db_tables(DBEngine.get_engine())
+    yield
 
-# Create DB tables from ORM schema
-create_db_tables(DBEngine.get_engine())
+app = FastAPI(lifespan=lifespan)
 
 # Define the GET /wines endpoint
-@app.get("/wines", response_model=WineResponse)
+@app.get("/wines/", response_model=WineResponse)
 def get_all_wines(db: Session = Depends(get_db)):
     wines = db.query(Wine).all()
     return WineResponse(wines=wines)
