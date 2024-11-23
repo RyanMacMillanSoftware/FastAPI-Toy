@@ -18,8 +18,8 @@ app = FastAPI(lifespan=lifespan)
 
 # Define the GET /wines endpoint
 @app.get("/wines/", response_model=WineResponseModel)
-def get_all_wines(db: Session = Depends(get_db)):
-    results = db.query(Wine).all()
+def get_all_wines(limit: int, offset: int, db: Session = Depends(get_db)):
+    results = db.query(Wine).limit(limit).offset(offset)
     return WineResponseModel(wines=results)
 
 # Define the POST /wines endpoint
